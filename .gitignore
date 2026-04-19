@@ -373,3 +373,5 @@ Thumbs.db
 appsettings.Development.json
 appsettings.*.local.json
 .env
+
+wwwroot/uploads/
