@@ -25,16 +25,53 @@ namespace Alakol.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(CreateBookingDto dto)
+        public async Task<IActionResult> Index(CreateBookingDto dto, DateTime checkIn, DateTime checkOut)
         {
+            dto.CheckInDate = checkIn;
+            dto.CheckOutDate = checkOut;
+
+            var minDate = DateTime.Now.Date.AddDays(3);
+
+            if (dto.RoomId <= 0)
+            {
+                ModelState.AddModelError("", "Please select a room.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.GuestName))
+            {
+                ModelState.AddModelError("", "Guest name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.GuestEmail))
+            {
+                ModelState.AddModelError("", "Email is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.GuestPhone))
+            {
+                ModelState.AddModelError("", "Phone is required.");
+            }
+
+            if (dto.CheckInDate.Date < minDate)
+            {
+                ModelState.AddModelError("", "Check-in must be at least 3 days from today.");
+            }
+
+            if (dto.CheckOutDate <= dto.CheckInDate)
+            {
+                ModelState.AddModelError("", "Check-out must be after check-in.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await LoadRoomsAsync();
+                return View("~/Views/Booking/Index.cshtml", dto);
+            }
+
             try
             {
                 await _bookingService.CreateBookingAsync(dto);
-
-                ModelState.Clear();
-                ViewBag.SuccessMessage = "Your booking request has been sent. Waiting for confirmation.";
-                await LoadRoomsAsync();
-                return View("~/Views/Booking/Index.cshtml", new CreateBookingDto());
+                return RedirectToAction(nameof(Success));
             }
             catch (Exception ex)
             {
@@ -53,13 +90,12 @@ namespace Alakol.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBookingDto dto)
         {
-            return await Index(dto);
+            return await Index(dto, dto.CheckInDate, dto.CheckOutDate);
         }
 
-        public IActionResult Success(int id)
+        public IActionResult Success()
         {
-            ViewBag.BookingId = id;
-            return View();
+            return View("~/Views/Booking/Success.cshtml");
         }
 
         [HttpGet]

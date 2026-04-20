@@ -100,19 +100,21 @@ namespace Alakol.Controllers.Admin
         public async Task<IActionResult> DeleteImage(int imageId)
         {
             var image = await _context.RoomImages.FindAsync(imageId);
-
             if (image == null)
             {
                 return NotFound();
             }
 
             var roomId = image.RoomId;
-            var fileName = Path.GetFileName(image.ImageUrl);
-            var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
-
-            if (System.IO.File.Exists(filePath))
+            var fileName = Path.GetFileName(image.ImageUrl?.TrimStart('/'));
+            if (!string.IsNullOrWhiteSpace(fileName))
             {
-                System.IO.File.Delete(filePath);
+                var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
             }
 
             _context.RoomImages.Remove(image);

@@ -45,22 +45,22 @@
         <input type="file" name="images" accept="image/*" multiple />
     </div>
 
-    @if (Model.Images.Any())
-    {
-        <div class="room-images">
-            @foreach (var image in Model.Images)
-            {
-                <div class="image-wrapper">
-                    <img src="@image.ImageUrl" alt="@Model.Name" />
-                    <form method="post" action="/Admin/Rooms/DeleteImage">
-                        <input type="hidden" name="imageId" value="@image.Id" />
-                        <button class="delete-btn" type="submit">&times;</button>
-                    </form>
-                </div>
-            }
-        </div>
-    }
-
     <button class="btn btn-primary" type="submit">Save</button>
 
 </form>
+
+@if (Model.Images.Any())
+{
+    <div class="room-images">
+        @foreach (var image in Model.Images)
+        {
+            <div class="image-wrapper">
+                <img src="@image.ImageUrl" alt="@Model.Name" />
+                <form method="post" action="/Admin/Rooms/DeleteImage">
+                    <input type="hidden" name="imageId" value="@image.Id" />
+                    <button class="delete-btn" type="submit">&times;</button>
+                </form>
+            </div>
+        }
+    </div>
+}
