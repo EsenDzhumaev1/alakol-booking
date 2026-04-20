@@ -5,7 +5,7 @@ public class Room
     public int Id { get; set; }
 
     public int GuestHouseId { get; set; }
-    public GuestHouse GuestHouse { get; set; }
+    public GuestHouse? GuestHouse { get; set; }
 
     public string Name { get; set; }
     public string Description { get; set; }
