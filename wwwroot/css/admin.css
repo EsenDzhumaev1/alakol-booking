@@ -1,0 +1,71 @@
+﻿body {
+    margin: 0;
+    font-family: Arial;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #0d3b66; /* blue */
+    color: white;
+    position: fixed;
+    padding: 20px;
+}
+
+    .sidebar h2 {
+        color: #e63946; /* red */
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        margin: 10px 0;
+    }
+
+        .sidebar a:hover {
+            color: #e63946;
+        }
+
+.content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+button {
+    background: #e63946;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+}
+
+    .status.pending {
+        background: orange;
+    }
+
+    .status.approved {
+        background: green;
+    }
+
+    .status.rejected {
+        background: red;
+    }
+
+    .status.cancelled {
+        background: gray;
+    }
+
+input, textarea, select {
+    display: block;
+    margin-bottom: 10px;
+    padding: 6px;
+    width: 300px;
+}

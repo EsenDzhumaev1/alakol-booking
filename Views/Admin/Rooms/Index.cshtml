@@ -1,0 +1,28 @@
+﻿@model List<Alakol.Models.Room>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Rooms</h2>
+
+<a href="/Admin/Rooms/Create">Create Room</a>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var room in Model)
+    {
+        <tr>
+            <td>@room.Name</td>
+            <td>@room.PricePerNight</td>
+            <td>
+                <a href="/Admin/Rooms/Edit/@room.Id">Edit</a>
+                <a href="/Admin/Rooms/Delete/@room.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>

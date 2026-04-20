@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Alakol Admin</h2>
+        <ul>
+            <li><a href="/Admin/Dashboard">Dashboard</a></li>
+            <li><a href="/Admin/Rooms">Rooms</a></li>
+            <li><a href="/Admin/Bookings">Bookings</a></li>
+            <li><a href="/Admin/Addons">Services</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        @RenderBody()
+    </div>
+
+</body>
+</html>

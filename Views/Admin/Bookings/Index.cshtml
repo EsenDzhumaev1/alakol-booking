@@ -1,0 +1,46 @@
+﻿@model List<Alakol.Models.Booking>
+@using Alakol.Models.Enums
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Bookings</h2>
+
+<table>
+    <tr>
+        <th>Guest</th>
+        <th>Room</th>
+        <th>Dates</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var b in Model)
+    {
+        <tr>
+            <td>@b.GuestName</td>
+            <td>@b.Room?.Name</td>
+            <td>@b.CheckInDate.ToShortDateString() - @b.CheckOutDate.ToShortDateString()</td>
+
+            <td>
+                <span class="status @b.Status.ToString().ToLower()">
+                    @b.Status
+                </span>
+            </td>
+
+            <td>
+                @if (b.Status == BookingStatus.Pending)
+                {
+                    <a href="/Admin/Bookings/Approve/@b.Id">Approve</a>
+                    <a href="/Admin/Bookings/Reject/@b.Id">Reject</a>
+                }
+
+                @if (b.Status == BookingStatus.Approved)
+                {
+                    <a href="/Admin/Bookings/Cancel/@b.Id">Cancel</a>
+                }
+            </td>
+        </tr>
+    }
+</table>

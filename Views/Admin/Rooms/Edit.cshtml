@@ -1,0 +1,35 @@
+﻿@model Alakol.Models.Room
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var guestHouses = ViewBag.GuestHouses as List<Alakol.Models.GuestHouse>;
+}
+
+<h2>Edit Room</h2>
+
+<form method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <label>Name</label>
+    <input asp-for="Name" />
+
+    <label>Description</label>
+    <textarea asp-for="Description"></textarea>
+
+    <label>Price</label>
+    <input asp-for="PricePerNight" />
+
+    <label>Capacity</label>
+    <input asp-for="Capacity" />
+
+    <label>GuestHouse</label>
+    <select asp-for="GuestHouseId">
+        @foreach (var gh in guestHouses)
+        {
+            <option value="@gh.Id">@gh.Name</option>
+        }
+    </select>
+
+    <button type="submit">Save</button>
+
+</form>
