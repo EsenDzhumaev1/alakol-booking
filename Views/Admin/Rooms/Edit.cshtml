@@ -50,7 +50,13 @@
         <div class="room-images">
             @foreach (var image in Model.Images)
             {
-                <img src="@image.ImageUrl" alt="@Model.Name" />
+                <div class="image-wrapper">
+                    <img src="@image.ImageUrl" alt="@Model.Name" />
+                    <form method="post" action="/Admin/Rooms/DeleteImage">
+                        <input type="hidden" name="imageId" value="@image.Id" />
+                        <button class="delete-btn" type="submit">&times;</button>
+                    </form>
+                </div>
             }
         </div>
     }

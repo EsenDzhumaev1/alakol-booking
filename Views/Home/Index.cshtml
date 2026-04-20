@@ -1,8 +1,79 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model List<Alakol.Models.Room>
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Alakol GuestHouse in Karakol</h1>
+        <p>Comfortable stay near mountains and ski resort</p>
+        <a class="site-button" href="/Booking">Book Now</a>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="site-container">
+        <h2>About Alakol</h2>
+        <p>Dear guests of Karakol! Are you looking for a quiet and cozy guesthouse? Our guesthouse 'Alakol' is created for a comfortable and relaxing stay.</p>
+        <p>Why choose us? We meet you at the airport and accompany you to the guesthouse. Our friendly staff is always happy to welcome you. Rooms are equipped with comfortable and modern eco-friendly furniture.</p>
+        <p>We offer home-style cuisine, ski tours, horseback riding, and many additional services that will make your stay unforgettable.</p>
+        <p>Our guesthouse has been successfully operating since 2009.</p>
+    </div>
+</section>
+
+<section class="page-section rooms-preview" id="rooms">
+    <div class="site-container">
+        <h2>Rooms</h2>
+
+        <div class="room-grid">
+            @foreach (var room in Model)
+            {
+                var image = room.Images.FirstOrDefault(i => i.IsMain) ?? room.Images.FirstOrDefault();
+
+                <div class="room-card">
+                    <div class="room-card-image">
+                        @if (image != null)
+                        {
+                            <img src="@image.ImageUrl" alt="@room.Name" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </div>
+
+                    <div class="room-card-body">
+                        <h3>@room.Name</h3>
+                        <p class="room-price">@room.PricePerNight per night</p>
+                        <p>@room.Description</p>
+                        <a class="site-button site-button-outline" href="#">View Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="page-section location-section">
+    <div class="site-container">
+        <h2>Location</h2>
+        <p>Stahanova Street 140, Karakol</p>
+
+        <div class="map-frame">
+            <iframe
+                src="https://www.google.com/maps?q=Stahanova%20Street%20140%2C%20Karakol&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+<section class="page-section contact-section" id="contact">
+    <div class="site-container">
+        <h2>Contact</h2>
+        <p>Phone: +996 700 000 000</p>
+        <p>Email: info@alakol.kg</p>
+        <p>Contact us to ask about available rooms and booking dates.</p>
+    </div>
+</section>

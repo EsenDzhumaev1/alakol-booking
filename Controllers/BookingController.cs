@@ -1,55 +1,79 @@
-﻿using Alakol.DTOs;
+using Alakol.Data;
+using Alakol.DTOs;
 using Alakol.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Alakol.Controllers
 {
     public class BookingController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly IBookingService _bookingService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(ApplicationDbContext context, IBookingService bookingService)
         {
+            _context = context;
             _bookingService = bookingService;
         }
 
-        // GET: /Booking/Create
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            await LoadRoomsAsync();
+            return View("~/Views/Booking/Index.cshtml", new CreateBookingDto());
         }
 
-        // POST: /Booking/Create
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBookingDto dto)
+        public async Task<IActionResult> Index(CreateBookingDto dto)
         {
             try
             {
-                var bookingId = await _bookingService.CreateBookingAsync(dto);
+                await _bookingService.CreateBookingAsync(dto);
 
-                return RedirectToAction("Success", new { id = bookingId });
+                ModelState.Clear();
+                ViewBag.SuccessMessage = "Your booking request has been sent. Waiting for confirmation.";
+                await LoadRoomsAsync();
+                return View("~/Views/Booking/Index.cshtml", new CreateBookingDto());
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return View(dto);
+                await LoadRoomsAsync();
+                return View("~/Views/Booking/Index.cshtml", dto);
             }
         }
 
-        // GET: /Booking/Success
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateBookingDto dto)
+        {
+            return await Index(dto);
+        }
+
         public IActionResult Success(int id)
         {
             ViewBag.BookingId = id;
             return View();
         }
 
-        // API-style endpoint (useful for testing)
         [HttpGet]
         public async Task<IActionResult> CheckAvailability(int roomId, DateTime checkIn, DateTime checkOut)
         {
             var available = await _bookingService.IsRoomAvailable(roomId, checkIn, checkOut);
             return Json(new { available });
+        }
+
+        private async Task LoadRoomsAsync()
+        {
+            ViewBag.Rooms = await _context.Rooms
+                .Where(r => r.IsActive)
+                .ToListAsync();
         }
     }
 }

@@ -1,0 +1,58 @@
+@model Alakol.DTOs.CreateBookingDto
+@{
+    ViewData["Title"] = "Booking";
+    var rooms = ViewBag.Rooms as List<Alakol.Models.Room> ?? new List<Alakol.Models.Room>();
+}
+
+<section class="booking-section">
+    <div class="booking-container">
+        <h1>Book Your Stay</h1>
+
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="booking-success">@ViewBag.SuccessMessage</div>
+        }
+
+        <form class="booking-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="booking-error"></div>
+
+            <div class="form-group">
+                <label>Check-in date</label>
+                <input asp-for="CheckInDate" type="date" />
+            </div>
+
+            <div class="form-group">
+                <label>Check-out date</label>
+                <input asp-for="CheckOutDate" type="date" />
+            </div>
+
+            <div class="form-group">
+                <label>Room</label>
+                <select asp-for="RoomId">
+                    <option value="">Select room</option>
+                    @foreach (var room in rooms)
+                    {
+                        <option value="@room.Id">@room.Name - @room.PricePerNight per night</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Guest Name</label>
+                <input asp-for="GuestName" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input asp-for="GuestEmail" type="email" />
+            </div>
+
+            <div class="form-group">
+                <label>Phone</label>
+                <input asp-for="GuestPhone" />
+            </div>
+
+            <button class="site-button" type="submit">Book Now</button>
+        </form>
+    </div>
+</section>

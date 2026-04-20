@@ -1,14 +1,29 @@
+using Alakol.Data;
 using Alakol.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Alakol.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var rooms = await _context.Rooms
+                .Include(r => r.Images)
+                .Where(r => r.IsActive)
+                .Take(3)
+                .ToListAsync();
+
+            return View(rooms);
         }
 
         public IActionResult Privacy()

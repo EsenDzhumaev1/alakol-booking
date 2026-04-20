@@ -96,6 +96,31 @@ namespace Alakol.Controllers.Admin
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(int imageId)
+        {
+            var image = await _context.RoomImages.FindAsync(imageId);
+
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            var roomId = image.RoomId;
+            var fileName = Path.GetFileName(image.ImageUrl);
+            var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            _context.RoomImages.Remove(image);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Edit), new { id = roomId });
+        }
+
         private async Task SaveRoomImagesAsync(int roomId, List<IFormFile> images)
         {
             if (images == null || images.Count == 0)

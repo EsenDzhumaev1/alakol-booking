@@ -147,6 +147,24 @@ input[type="file"] {
     border-radius: 4px;
 }
 
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 0 4px 0 4px;
+}
+
 .admin-table,
 table {
     width: 100%;
