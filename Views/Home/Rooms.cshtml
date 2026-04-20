@@ -1,0 +1,37 @@
+@model List<Alakol.Models.Room>
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+<section class="page-section rooms-showcase">
+    <div class="site-container">
+        <h1>Rooms</h1>
+
+        <div class="showcase-grid">
+            @foreach (var room in Model)
+            {
+                var image = room.Images.FirstOrDefault(i => i.IsMain) ?? room.Images.FirstOrDefault();
+
+                <div class="showcase-card">
+                    <div class="showcase-image">
+                        @if (image != null)
+                        {
+                            <img src="@image.ImageUrl" alt="@room.Name" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </div>
+
+                    <div class="showcase-body">
+                        <h2>@room.Name</h2>
+                        <p class="room-price">$@room.PricePerNight / night</p>
+                        <p>@room.Description</p>
+                        <a href="/Booking?roomId=@room.Id" class="btn-primary">Book Now</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

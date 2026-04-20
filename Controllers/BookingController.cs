@@ -108,6 +108,7 @@ namespace Alakol.Controllers
         private async Task LoadRoomsAsync()
         {
             ViewBag.Rooms = await _context.Rooms
+                .Include(r => r.Images)
                 .Where(r => r.IsActive)
                 .ToListAsync();
         }

@@ -1,6 +1,7 @@
 @model List<Alakol.Models.Room>
 @{
     ViewData["Title"] = "Home";
+    var galleryImages = ViewBag.GalleryImages as List<Alakol.Models.RoomImage> ?? new List<Alakol.Models.RoomImage>();
 }
 
 <section class="hero-section">
@@ -21,33 +22,15 @@
     </div>
 </section>
 
-<section class="page-section rooms-preview" id="rooms">
+<section class="page-section gallery-section">
     <div class="site-container">
-        <h2>Rooms</h2>
+        <h2>Gallery</h2>
 
-        <div class="room-grid">
-            @foreach (var room in Model)
+        <div class="gallery-grid">
+            @foreach (var image in galleryImages)
             {
-                var image = room.Images.FirstOrDefault(i => i.IsMain) ?? room.Images.FirstOrDefault();
-
-                <div class="room-card">
-                    <div class="room-card-image">
-                        @if (image != null)
-                        {
-                            <img src="@image.ImageUrl" alt="@room.Name" />
-                        }
-                        else
-                        {
-                            <span>No image</span>
-                        }
-                    </div>
-
-                    <div class="room-card-body">
-                        <h3>@room.Name</h3>
-                        <p class="room-price">@room.PricePerNight per night</p>
-                        <p>@room.Description</p>
-                        <a class="site-button site-button-outline" href="#">View Details</a>
-                    </div>
+                <div class="gallery-item">
+                    <img src="@image.ImageUrl" alt="Alakol GuestHouse" class="gallery-img" onclick="openModal(this.src)" />
                 </div>
             }
         </div>
@@ -68,6 +51,27 @@
         </div>
     </div>
 </section>
+
+<div id="imgModal" class="image-modal" onclick="closeModal()">
+    <img id="modalImage" alt="Alakol GuestHouse preview" />
+</div>
+
+<script>
+    function openModal(src) {
+        document.getElementById("imgModal").style.display = "flex";
+        document.getElementById("modalImage").src = src;
+    }
+
+    function closeModal() {
+        document.getElementById("imgModal").style.display = "none";
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
+</script>
 
 <section class="page-section contact-section" id="contact">
     <div class="site-container">

@@ -23,7 +23,18 @@ namespace Alakol.Controllers
                 .Take(3)
                 .ToListAsync();
 
+            ViewBag.GalleryImages = await _context.RoomImages.ToListAsync();
+
             return View(rooms);
+        }
+
+        public async Task<IActionResult> Rooms()
+        {
+            var rooms = await _context.Rooms
+                .Include(r => r.Images)
+                .ToListAsync();
+
+            return View("~/Views/Home/Rooms.cshtml", rooms);
         }
 
         public IActionResult Privacy()
