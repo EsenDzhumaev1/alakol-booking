@@ -7,10 +7,13 @@
 
 <h2>Bookings</h2>
 
-<table>
+<table class="admin-table">
     <tr>
-        <th>Guest</th>
-        <th>Room</th>
+        <th>Guest Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Room Name</th>
+        <th>GuestHouse Name</th>
         <th>Dates</th>
         <th>Status</th>
         <th>Actions</th>
@@ -20,7 +23,10 @@
     {
         <tr>
             <td>@b.GuestName</td>
+            <td>@b.GuestEmail</td>
+            <td>@b.GuestPhone</td>
             <td>@b.Room?.Name</td>
+            <td>@b.Room?.GuestHouse?.Name</td>
             <td>@b.CheckInDate.ToShortDateString() - @b.CheckOutDate.ToShortDateString()</td>
 
             <td>
@@ -29,16 +35,16 @@
                 </span>
             </td>
 
-            <td>
+            <td class="actions">
                 @if (b.Status == BookingStatus.Pending)
                 {
-                    <a href="/Admin/Bookings/Approve/@b.Id">Approve</a>
-                    <a href="/Admin/Bookings/Reject/@b.Id">Reject</a>
+                    <a class="btn btn-secondary" href="/Admin/Bookings/Approve/@b.Id">Approve</a>
+                    <a class="btn btn-danger" href="/Admin/Bookings/Reject/@b.Id">Reject</a>
                 }
 
                 @if (b.Status == BookingStatus.Approved)
                 {
-                    <a href="/Admin/Bookings/Cancel/@b.Id">Cancel</a>
+                    <a class="btn btn-danger" href="/Admin/Bookings/Cancel/@b.Id">Cancel</a>
                 }
             </td>
         </tr>

@@ -1,33 +1,48 @@
 ﻿@model Alakol.Models.Room
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var guestHouses = ViewBag.GuestHouses as List<Alakol.Models.GuestHouse>;
+    var guestHouses = ViewBag.GuestHouses as List<Alakol.Models.GuestHouse> ?? new List<Alakol.Models.GuestHouse>();
 }
 
 <h2>Create Room</h2>
 
-<form method="post">
+<form class="admin-form" method="post" enctype="multipart/form-data">
 
-    <label>Name</label>
-    <input asp-for="Name" />
+    <div class="form-group">
+        <label>Name</label>
+        <input asp-for="Name" />
+    </div>
 
-    <label>Description</label>
-    <textarea asp-for="Description"></textarea>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea asp-for="Description"></textarea>
+    </div>
 
-    <label>Price</label>
-    <input asp-for="PricePerNight" />
+    <div class="form-group">
+        <label>Price</label>
+        <input asp-for="PricePerNight" />
+    </div>
 
-    <label>Capacity</label>
-    <input asp-for="Capacity" />
+    <div class="form-group">
+        <label>Capacity</label>
+        <input asp-for="Capacity" />
+    </div>
 
-    <label>GuestHouse</label>
-    <select asp-for="GuestHouseId">
-        @foreach (var gh in guestHouses)
-        {
-            <option value="@gh.Id">@gh.Name</option>
-        }
-    </select>
+    <div class="form-group">
+        <label>GuestHouse</label>
+        <select asp-for="GuestHouseId">
+            @foreach (var gh in guestHouses)
+            {
+                <option value="@gh.Id">@gh.Name</option>
+            }
+        </select>
+    </div>
 
-    <button type="submit">Create</button>
+    <div class="form-group">
+        <label>Room images</label>
+        <input type="file" name="images" accept="image/*" multiple />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create</button>
 
 </form>

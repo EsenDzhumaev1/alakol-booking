@@ -5,23 +5,42 @@
 
 <h2>Rooms</h2>
 
-<a href="/Admin/Rooms/Create">Create Room</a>
+<a class="btn btn-primary" href="/Admin/Rooms/Create">Create Room</a>
 
-<table>
+<table class="admin-table">
     <tr>
+        <th>Image</th>
         <th>Name</th>
+        <th>Description</th>
         <th>Price</th>
+        <th>Capacity</th>
+        <th>GuestHouse</th>
         <th>Actions</th>
     </tr>
 
     @foreach (var room in Model)
     {
+        var mainImage = room.Images.FirstOrDefault(i => i.IsMain) ?? room.Images.FirstOrDefault();
+
         <tr>
-            <td>@room.Name</td>
-            <td>@room.PricePerNight</td>
             <td>
-                <a href="/Admin/Rooms/Edit/@room.Id">Edit</a>
-                <a href="/Admin/Rooms/Delete/@room.Id">Delete</a>
+                @if (mainImage != null)
+                {
+                    <img class="room-thumbnail" src="@mainImage.ImageUrl" alt="@room.Name" />
+                }
+                else
+                {
+                    <span>No image</span>
+                }
+            </td>
+            <td>@room.Name</td>
+            <td>@room.Description</td>
+            <td>@room.PricePerNight</td>
+            <td>@room.Capacity</td>
+            <td>@room.GuestHouse?.Name</td>
+            <td class="actions">
+                <a class="btn btn-secondary" href="/Admin/Rooms/Edit/@room.Id">Edit</a>
+                <a class="btn btn-danger" href="/Admin/Rooms/Delete/@room.Id">Delete</a>
             </td>
         </tr>
     }

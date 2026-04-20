@@ -1,0 +1,28 @@
+@model List<Alakol.Models.Addon>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Services</h2>
+
+<a class="btn btn-primary" href="/Admin/AdminServices/Create">Create Service</a>
+
+<table class="admin-table">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var service in Model)
+    {
+        <tr>
+            <td>@service.Name</td>
+            <td>@service.Price</td>
+            <td class="actions">
+                <a class="btn btn-secondary" href="/Admin/AdminServices/Edit/@service.Id">Edit</a>
+                <a class="btn btn-danger" href="/Admin/AdminServices/Delete/@service.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>

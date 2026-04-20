@@ -16,7 +16,10 @@ namespace Alakol.Controllers.Admin
 
         public async Task<IActionResult> Index()
         {
-            var bookings = await _context.Bookings.ToListAsync();
+            var bookings = await _context.Bookings
+                .Include(b => b.Room)
+                .ThenInclude(r => r.GuestHouse)
+                .ToListAsync();
 
             return View("~/Views/Admin/Bookings/Index.cshtml", bookings);
         }

@@ -1,19 +1,21 @@
-﻿body {
+body {
     margin: 0;
     font-family: Arial;
+    background: #f7f9fc;
+    color: #1f2933;
 }
 
 .sidebar {
     width: 220px;
     height: 100vh;
-    background: #0d3b66; /* blue */
+    background: #0d3b66;
     color: white;
     position: fixed;
     padding: 20px;
 }
 
     .sidebar h2 {
-        color: #e63946; /* red */
+        color: #e63946;
     }
 
     .sidebar a {
@@ -29,15 +31,58 @@
 
 .content {
     margin-left: 240px;
-    padding: 20px;
+    padding: 28px;
 }
 
-button {
+.admin-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 24px;
+    border: 1px solid #e1e7ef;
+    border-radius: 6px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    color: #0d3b66;
+}
+
+button,
+.btn {
     background: #e63946;
     color: white;
     border: none;
-    padding: 8px 12px;
+    display: inline-block;
+    padding: 9px 13px;
     cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #e63946;
+}
+
+.btn-secondary {
+    background: #0d3b66;
+}
+
+.btn-danger {
+    background: #b91c1c;
+}
+
+.btn:hover {
+    text-decoration: none;
+    opacity: 0.9;
 }
 
 .status {
@@ -65,7 +110,73 @@ button {
 
 input, textarea, select {
     display: block;
-    margin-bottom: 10px;
-    padding: 6px;
-    width: 300px;
+    box-sizing: border-box;
+    padding: 9px;
+    width: 100%;
+    border: 1px solid #c9d4e2;
+    border-radius: 4px;
 }
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+input[type="file"] {
+    padding-left: 0;
+}
+
+.room-thumbnail {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.room-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0 15px;
+}
+
+.room-images img {
+    width: 140px;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.admin-table,
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #d8e0ea;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    background: #0d3b66;
+    color: white;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+a {
+    margin-right: 5px;
+    text-decoration: none;
+    color: #e63946;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
