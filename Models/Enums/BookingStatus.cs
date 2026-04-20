@@ -1,4 +1,6 @@
-﻿public enum BookingStatus
+﻿namespace Alakol.Models.Enums;
+
+public enum BookingStatus
 {
     Pending = 0,
     Approved = 1,

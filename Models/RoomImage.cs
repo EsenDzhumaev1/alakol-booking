@@ -1,4 +1,6 @@
-﻿public class RoomImage
+﻿namespace Alakol.Models;
+
+public class RoomImage
 {
     public int Id { get; set; }
 

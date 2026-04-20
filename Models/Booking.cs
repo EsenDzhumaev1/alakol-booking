@@ -1,4 +1,5 @@
-﻿using Alakol.Models;
+﻿using Alakol.Models.Enums;
+namespace Alakol.Models;
 
 public class Booking
 {

@@ -1,4 +1,4 @@
-﻿using Alakol.Models;
+﻿namespace Alakol.Models;
 
 public class GuestHouse
 {
