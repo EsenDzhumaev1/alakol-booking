@@ -9,10 +9,12 @@ namespace Alakol.Services;
 public class BookingService : IBookingService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IEmailService _emailService;
 
-    public BookingService(ApplicationDbContext context)
+    public BookingService(ApplicationDbContext context, IEmailService emailService)
     {
         _context = context;
+        _emailService = emailService;
     }
 
     // Check availability
@@ -106,6 +108,12 @@ public class BookingService : IBookingService
             _context.BookingAddons.AddRange(bookingAddons);
             await _context.SaveChangesAsync();
         }
+
+        await _emailService.SendBookingNotificationAsync(
+            dto.GuestName,
+            dto.GuestEmail,
+            dto.GuestPhone
+        );
 
         return booking.Id;
     }

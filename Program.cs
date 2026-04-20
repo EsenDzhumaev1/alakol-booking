@@ -1,4 +1,5 @@
 using Alakol.Data;
+using Alakol.Models;
 using Alakol.Services;
 using Alakol.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
